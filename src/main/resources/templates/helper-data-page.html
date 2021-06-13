@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="navbar :: header">
+    <title>Home page</title>
+
+</head>
+<body style="background: #f5f2d5">
+<div th:replace="navbar :: nav"></div>
+
+    <section class="pt-5 pb-5">
+        <div class="container">
+            <div class="row  justify-content-center     align-items-center d-flex  h-100 ">
+                <div class="col-12 col-md-12   ">
+                    <h1 class="   mb-2  "><strong>Данные абитуриента</strong></h1>
+                    <p class="lead   font-weight-bold  mb-5 pb-5 border-bottom border-grey">Ускорьте заполнение документов в несколько раз!</p>
+
+                    <div class="row  ">
+                        <div class="col-lg-4 mb-5 mb-lg-0">
+                            <div class="  text-success mb-3">
+                                <span class="material-icons"> perm_identity </span>
+                            </div>
+                            <a class="h5 mb-4" th:href="@{personality/{id}(id=${contract.id})}">Личные данные</a>
+                            <p>Введите свои личные данные.</p>
+                        </div>
+
+                        <div class="col-lg-4 mb-5 mb-lg-0">
+                            <div class="  text-success mb-3">
+                                <span class="material-icons"> fingerprint </span>
+                            </div>
+                            <a class="h5 mb-4" th:href="@{passport/{id}(id=${contract.id})}">Данные документа удостоверяющего личность</a>
+                            <p>Введите свои данные паспорта или вида на жительство.</p>
+                        </div>
+
+                        <div class="col-lg-4 mb-5 mb-lg-0">
+                            <div class="  text-success mb-4  font-size:100px">
+                                <span class="material-icons"> maps_home_work </span>
+                            </div>
+                            <a class="h5 mb-4" th:href="@{address/{id}(id=${contract.id})}">Данные адреса регистрации</a>
+                            <p>Введите данные своего адреса.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="form-check m-3">
+        <input type="hidden" th:value="${contract.id}" id="id" name="id">
+        <input class="form-check-input" id="isEighteen" name="isEighteen" onclick="checkis()" th:checked="${checkbox}"
+               type="checkbox">
+        <label class="form-check-label" for="isEighteen">
+            Я старше 18
+        </label>
+    </div>
+
+    <section class="pt-5 pb-5" id="parents_section">
+        <div class="container">
+            <div class="row  justify-content-center     align-items-center d-flex  h-100 ">
+                <div class="col-12 col-md-12   ">
+
+                    <div class="row  ">
+                        <div class="col-lg-4 mb-5 mb-lg-0">
+                            <div class="  text-success mb-3">
+                                <span class="material-icons"> supervisor_account </span>
+                            </div>
+                            <a class="h5 mb-4" th:href="@{parent/personality/{id}(id=${contract.id})}">Личные данные законного представителя</a>
+                            <p>Введите свои личные данные законного представителя.</p>
+                        </div>
+
+                        <div class="col-lg-4 mb-5 mb-lg-0">
+                            <div class="  text-success mb-3">
+                                <span class="material-icons"> supervised_user_circle </span>
+                            </div>
+                            <a class="h5 mb-4" href="/parent/personality">Данные документа удостоверяющего личность законного представителя</a>
+                            <p>Введите свои данные паспорта или вида на жительство законного представителя.</p>
+                        </div>
+
+                        <div class="col-lg-4 mb-5 mb-lg-0">
+                            <div class="  text-success mb-4  font-size:100px">
+                                <span class="material-icons"> maps_home_work </span>
+                            </div>
+                            <a class="h5 mb-4" href="/parent/address">Данные адреса регистрации законного представителя</a>
+                            <p>Введите данные своего адреса законного представителя.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br/>
+
+    <a class="button btn btn-dark" href="/downloadFile">Скачать договор</a>
+
+
+<script type="text/javascript"
+        src="../webjars/jquery/2.2.4/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(changeVisibility())
+
+    function checkis() {
+
+        var id = $('#id').val();
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/try/" + id,
+            data: JSON.stringify({checked: $('#isEighteen').prop('checked')}),
+            dataType: 'json',
+            cache: false,
+            timeout: 600000,
+        });
+        changeVisibility();
+    }
+
+    function changeVisibility() {
+        if (!$('#isEighteen').prop('checked')) {
+            document.getElementById("parents_section").style.visibility = "visible";
+        } else {
+            document.getElementById("parents_section").style.visibility = "hidden";
+        }
+    }
+
+</script>
+
+</script>
+
+</body>
+</html>

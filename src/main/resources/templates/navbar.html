@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="header">
+    <meta charset="UTF-8">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+<div th:fragment="nav">
+    <nav class="navbar navbar-expand-lg navbar-light " style="background: #dedbc1">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Главная</a>
+            <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"
+                    data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item" th:if="${#authorization.expression('hasAuthority(''admin:read'')')}">
+                        <a aria-current="page" class="nav-link active" href="/users">Пользователи</a>
+                    </li>
+                    <!--                    <li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/data_filling">Заполнение данных</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <div th:if="${!#authorization.expression('isAuthenticated()')}">
+                        <a class="nav-link btn button" href="/auth/login">Войти</a>
+                    </div>
+
+                    <div th:if="${!#authorization.expression('isAuthenticated()')}">
+                        <a class="nav-link btn button" href="/registration">Зарегистрироваться</a>
+                    </div>
+                    <div th:if="${#authorization.expression('isAuthenticated()')}">
+
+                        <form action="/auth/logout" method="POST">
+                            <button class="nav-link button">
+                                Выход
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+</div>
+</body>
+
+</html>

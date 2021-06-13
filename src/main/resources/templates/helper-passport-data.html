@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="navbar :: header">
+    <title>Данные документа</title>
+</head>
+<body style="background: #f5f2d5">
+<div th:replace="navbar :: nav"></div>
+
+<div class="container pt-5 pb-5">
+    <form class="form-signin" method="post" th:action="@{/contract/passport/{id}(id=${contract.id})}"
+          th:object="${contract.document}">
+        <h2 class="h3 mb-3 fw-normal">Данные документа</h2>
+
+        <input class="form-control" id="id" name="id" th:field="*{id}" type="hidden">
+
+        <div class="form-floating">
+            <select class="form-select mb-3" id="doc_type" name="type" required th:field="*{type}">
+                <option value="Паспорт">Паспорт</option>
+                <option value="Вид на жительство">Вид на жительство</option>
+            </select>
+            <label for="doc_type">Вид документа</label>
+        </div>
+
+        <div class="form-floating">
+            <input class="form-control mb-3" id="IDnumber" name="number" placeholder="IDnumber" required
+                   th:field="*{number}"
+                   type="text">
+            <label for="IDnumber">Серия и номер</label>
+        </div>
+
+        <div class="form-floating">
+            <input class="form-control mb-3" id="date" name="date" placeholder="dd-mm-yyyy"
+                   required th:field="*{date}" type="date">
+            <label for="date">Дата выдачи</label>
+        </div>
+
+        <div class="form-floating">
+            <input class="form-control mb-3" id="governmentAgency" name="governmentAgency" placeholder="Gov_agency"
+                   required
+                   th:field="*{governmentAgency}"
+                   type="text">
+            <label for="governmentAgency">Наименование госоргана, выдавшего документ</label>
+        </div>
+
+        <div class="form-floating">
+            <input class="form-control mb-3" id="identificationNumber" name="identificationNumber"
+                   placeholder="Identification"
+                   required th:field="*{identificationNumber}" type="text">
+            <label for="identificationNumber">Идентификационный номер</label>
+        </div>
+
+        <button class="btn btn-lg btn-success btn-block" type="submit">Сохранить</button>
+    </form>
+
+</div>
+
+</body>
+</html>

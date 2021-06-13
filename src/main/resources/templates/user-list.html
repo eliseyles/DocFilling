@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="navbar :: header">
+    <title>Пользователи</title>
+</head>
+<body style="background: #f5f2d5">
+<div th:replace="navbar :: nav"></div>
+<div class="container pt-5 pb-5">
+    <div th:switch="${users}">
+        <h2 class="h3 mb-3 fw-normal" th:case="null">Пользователи не найдены!</h2>
+        <div th:case="*">
+            <h2 class="h3 mb-3 fw-normal">Пользователи</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Логин</th>
+                    <th scope="col">Данные</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.login}"></td>
+                    <td><a th:href="@{/contract/{id}(id=${user.id})}">Ссылка</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

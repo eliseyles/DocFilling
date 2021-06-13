@@ -21,7 +21,7 @@ USE `docsFilling` ;
 DROP TABLE IF EXISTS `docsFilling`.`role` ;
 
 CREATE TABLE IF NOT EXISTS `docsFilling`.`role` (
-  `id` INT NOT NULL DEFAULT 1,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -45,7 +45,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `docsFilling`.`address` ;
 
 CREATE TABLE IF NOT EXISTS `docsFilling`.`address` (
-  `id` INT NOT NULL DEFAULT 1,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `region` VARCHAR(45) NULL,
   `city` VARCHAR(45) NOT NULL,
   `street` VARCHAR(45) NOT NULL,
@@ -61,7 +61,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `docsFilling`.`identity_document` ;
 
 CREATE TABLE IF NOT EXISTS `docsFilling`.`identity_document` (
-  `id` INT NOT NULL DEFAULT 1,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(45) NOT NULL,
   `series` VARCHAR(45) NULL,
   `number` VARCHAR(45) NOT NULL,
@@ -115,12 +115,12 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `docsFilling`.`user` ;
 
 CREATE TABLE IF NOT EXISTS `docsFilling`.`user` (
-  `id` INT NOT NULL DEFAULT 1,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `role_id` INT NOT NULL,
-  `enrollee_id` INT NOT NULL,
-  `parent_id` INT NOT NULL,
+  `role_id` INT NOT NULL DEFAULT 1,
+  `enrollee_id` INT DEFAULT NULL,
+  `parent_id` INT DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE,
   INDEX `fk_user_role_idx` (`role_id` ASC) VISIBLE,
@@ -147,3 +147,6 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+USE `docsFilling` ;
+insert into `role`(title) values ("USER"), ("ADMIN"), ( "CREATOR");
